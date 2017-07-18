@@ -55,7 +55,7 @@ public class LoginController {
         if (null!=user && user.getPassword().equals(password)) {
             return "redirect:/hello?name="+username;
         }
-        return "redirect:/login";
+        return "redirect:/";
     }
 
 }
