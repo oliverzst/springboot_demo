@@ -1,36 +1,39 @@
 package cn.no7player.model;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by zl on 2015/8/27.
  */
-public class User {
-    private Long id;
-    private String name;
-    private Integer age;
+public class User implements Serializable{
+    private Integer uid;
+    private String username;
     private String password;
+    private Set<Role> roles = new HashSet<>();
 
-    public Long getId() {
-        return id;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+    public Integer getUid() {
+        return uid;
     }
 
-    public String getName() {
-        return name;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getUsername() {
+        return username;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

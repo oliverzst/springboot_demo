@@ -1,5 +1,6 @@
 package cn.no7player.controller;
 
+import cn.no7player.common.redis.RedisServiceImpl;
 import cn.no7player.model.User;
 import cn.no7player.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,18 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("")
+    @Autowired
+    private RedisServiceImpl redisService;
+
+    @RequestMapping("/login")
     public String login(Model model) {
         return "log_in";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request, Model model) {
+        request.getSession().removeAttribute("user");
+        return "redirect:/login";
     }
 
     @RequestMapping("/signup")
@@ -37,13 +47,13 @@ public class LoginController {
         User user = userService.findByName(username);
         if (null==user) {
             user = new User();
-            user.setAge(1);
-            user.setId(1L);
             user.setPassword(password);
-            user.setName(username);
+            user.setUsername(username);
             userService.save(user);
+        } else {
+            return "redirect:/signup";
         }
-        return "sign_up";
+        return "redirect:/login";
     }
 
     @RequestMapping("/logincheck")
@@ -51,11 +61,24 @@ public class LoginController {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User user = userService.findByName(username);
-        if (null!=user && user.getPassword().equals(password)) {
-            return "redirect:/hello?name="+username;
+
+//        UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
+//        Subject subject = SecurityUtils.getSubject();
+
+        try {
+//            subject.login(usernamePasswordToken);   //完成登录
+//            User user=(User) subject.getPrincipal();
+            User user = userService.findByName(username);
+            if (null!=user && user.getPassword().equals(password)) {
+//                redisService.set(username,password);
+                request.getSession().setAttribute("user", user);
+                return "redirect:/hello";
+            } else {
+                return "redirect:/login";//返回登录页面
+            }
+        } catch(Exception e) {
+            return "redirect:/login";//返回登录页面
         }
-        return "redirect:/";
     }
 
 }

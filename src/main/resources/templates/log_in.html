@@ -1,5 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8" />
     <title>lovakate</title>
@@ -13,7 +15,13 @@
     <img class="content-logo" th:src="@{/images/lovekatebaby.png}" alt="logo" />
     <h1 class="content-title">登录</h1>
     <div class="content-form">
-        <form method="post" action="/logincheck">
+        <!--<div th:if="${param.error}">-->
+            <!--用户名或密码错-->
+        <!--</div>-->
+        <!--<div th:if="${param.logout}">-->
+            <!--您已注销成功-->
+        <!--</div>-->
+        <form method="post" th:action="@{/logincheck}">
             <div id="change_margin_1">
                 <input class="user" type="text" name="username" placeholder="请输入用户名" />
             </div>

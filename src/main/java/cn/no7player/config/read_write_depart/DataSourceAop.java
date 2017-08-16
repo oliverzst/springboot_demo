@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
+//@RequiresAuthentication
 public class DataSourceAop {
 
     private static Logger logger = Logger.getLogger(DataSourceAop.class);

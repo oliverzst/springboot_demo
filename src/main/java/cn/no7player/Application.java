@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @EnableAutoConfiguration
 @SpringBootApplication
+//@EnableRedisHttpSession
 @ComponentScan
 //@MapperScan("cn.no7player.mapper")
 public class Application {

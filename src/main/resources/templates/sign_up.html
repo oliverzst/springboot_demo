@@ -13,7 +13,7 @@
     <img class="content-logo" th:src="@{/images/lovekatebaby.png}" alt="logo" />
     <h1 class="content-title">创建账户</h1>
     <div class="content-form">
-        <form method="post" action="/regist" >
+        <form method="post" th:action="@{/regist}" >
             <div id="change_margin_1">
                 <input class="user" type="text" name="username" placeholder="请输入用户名" />
             </div>
@@ -30,7 +30,7 @@
         </form>
     </div>
     <div class="content-login-description">已经拥有账户？</div>
-    <div><a class="content-login-link" href="/">登录</a></div>
+    <div><a class="content-login-link" th:href="@{/login}">登录</a></div>
 </div>
 <script th:src="@{/js/common_form_test.js}"></script>
 </body>

@@ -3,26 +3,24 @@
 <mapper namespace="cn.no7player.mapper.UserMapper">
  
   <select id="findUserInfo" resultType="cn.no7player.model.User">
-    select id, name, age,password from user;
+    select uid, username,password from user;
   </select>
 
   <select id="findByName" resultType="cn.no7player.model.User">
     select
     *
     from user a
-    where a.name = #{name}
+    where a.username = #{name}
   </select>
 
   <insert id="insert" >
     insert into user (
-    id,
-    name,
-    age,
+    uid,
+    username,
     password
     )value(
-    #{id},
-    #{name},
-    #{age},
+    #{uid},
+    #{username},
     #{password}
     )
   </insert>
