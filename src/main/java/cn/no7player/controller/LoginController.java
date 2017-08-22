@@ -1,6 +1,7 @@
 package cn.no7player.controller;
 
 import cn.no7player.common.redis.RedisServiceImpl;
+import cn.no7player.common.security.SessionContext;
 import cn.no7player.model.User;
 import cn.no7player.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author zhangst
@@ -30,7 +32,10 @@ public class LoginController {
 
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request, Model model) {
-        request.getSession().removeAttribute("user");
+        HttpSession session = request.getSession();
+        SessionContext.getInstance().DelSession(session);
+        session.removeAttribute("user");
+        session.invalidate();
         return "redirect:/login";
     }
 
@@ -71,13 +76,22 @@ public class LoginController {
             User user = userService.findByName(username);
             if (null!=user && user.getPassword().equals(password)) {
 //                redisService.set(username,password);
-                request.getSession().setAttribute("user", user);
-                return "redirect:/hello";
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                Boolean b = SessionContext.getInstance().sessionHandlerByCacheMap(session);
+                if (b) {
+                    return "redirect:/hello";
+                } else {
+                    model.addAttribute("reLogin", "对不起该用户已经有人登录，您不能重复登录!");
+                    return "log_in";//返回登录页面
+                }
             } else {
-                return "redirect:/login";//返回登录页面
+                model.addAttribute("reLogin", "用户名或密码错误，请重新输入！");
+                return "log_in";//返回登录页面
             }
         } catch(Exception e) {
-            return "redirect:/login";//返回登录页面
+            model.addAttribute("reLogin", "系统错误，对此我很抱歉！");
+            return "log_in";//返回登录页面
         }
     }
 

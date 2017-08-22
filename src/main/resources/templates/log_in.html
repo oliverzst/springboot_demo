@@ -32,6 +32,9 @@
             </div>
             <!-- input的value为空时弹出提醒 -->
             <p id="remind_2"></p>
+            <div th:if="${reLogin}!=null">
+                <em style="color:red;font-size:15px;" th:text="${reLogin}"></em>
+            </div>
             <div id="change_margin_3">
                 <input class="content-form-signup" type="submit" value="登录" />
             </div>

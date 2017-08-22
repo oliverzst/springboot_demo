@@ -47,7 +47,7 @@ public class RedisServiceImpl implements IRedisService{
     }
 
     @Override
-    public String getString(String key) {
+    public String getString(final String key) {
         String result = (String) redisTemplate.execute(new RedisCallback<String>() {
             @Override
             public String doInRedis(RedisConnection connection) throws DataAccessException {
