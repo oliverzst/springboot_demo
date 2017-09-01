@@ -70,8 +70,11 @@ public class SessionContext {
             //判断session是否过期
             if (isSessionExit(oldsession.getId())) {
                 //没有过期
-                session.removeAttribute("user");
-                session.invalidate();
+                //排除同个浏览器
+                if (!oldsession.getId().equals(session.getId())) {
+                    session.removeAttribute("user");
+                    session.invalidate();
+                }
                 return false;
             } else {
                 //过期
