@@ -53,7 +53,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         // 注册监控拦截器
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login","/signup","/logincheck","/regist");
+                .excludePathPatterns("/login","/signup","/logincheck","/regist","/getSession","/login1");
         super.addInterceptors(registry);
     }
 

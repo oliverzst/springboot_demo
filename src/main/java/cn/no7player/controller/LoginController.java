@@ -26,8 +26,26 @@ public class LoginController {
     private RedisServiceImpl redisService;
 
     @RequestMapping("/login")
-    public String login(Model model) {
-        return "log_in";
+    public String login() {return "log_in";}
+
+    @RequestMapping("/login1")
+    public String login1(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Boolean login_falg = SessionContext.getInstance().sessionHandlerByCacheMap(session);
+        if (login_falg) {
+            return "redirect:/login";
+        } else {
+            return "redirect:/hello";
+        }
+    }
+
+    @RequestMapping("/getSession")
+    public String getSession(Model model ,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute("cookies", request.getCookies());
+        model.addAttribute("sessionId", session.getId());
+//        return "log_in";
+        return "session_show";
     }
 
     @RequestMapping("/logout")
